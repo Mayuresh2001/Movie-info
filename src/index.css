@@ -1,0 +1,189 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* .hide{
+  display: none;
+} */
+/* .pagination{
+display: flex; 
+padding: 30px;
+margin-left: 2rem; 
+font-size: 14px;
+font-weight: 700; 
+background: #fff;
+color: #2ecc71;
+justify-content: space-between;
+align-items: center;
+margin: 20px auto;
+}
+.page-item {
+   background-color: #fff;
+   color:#2ecc71;
+   width:30px;
+   height:30px;
+
+}
+
+.page-item:hover{
+   background-color: #fff;
+   border: 3px solid #2ecc71;
+   font-weight: bold;
+} */
+
+
+@import url('https://rsms.me/inter/inter.css');
+ html {
+	 font-family: 'Inter', sans-serif;
+}
+ @supports (font-variation-settings: normal) {
+	 html {
+		 font-family: 'Inter var', sans-serif;
+	}
+}
+
+ .pagination-container {
+	 display: flex;
+	 align-items: center; 
+    color:#fff;
+}
+ .arrow {
+	 display: block;
+	 font-size: 13px;
+	background: #98C1D9 ;
+   max-width: auto;
+   min-width: 32px;
+   color: black;
+
+   height: 32px;
+   padding: 0 6px;
+   border-radius: 6px;
+   margin: 0  6px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+ .pagination-number {
+   font-size: 13px;
+	 
+	 margin: 0  6px;
+	 border-radius: 6px;
+	 background: #98C1D9;
+	 max-width: auto;
+	 min-width: 32px;
+    color: black;
+	 height: 32px;
+	 display: flex;
+	 align-items: center;
+	 justify-content: center;
+	 cursor: pointer;
+	 padding: 0 10px;
+}
+ @media (hover: hover) {
+   .pagination-number:hover, .arrow:hover {
+		 background: #fff;
+      
+	}
+}
+
+.pagination-active {
+   background: #fff;
+   color: #282828;
+   position: relative;
+}
+
+
+
+
+
+.btn-disabled{
+   cursor: not-allowed;
+   pointer-events: none;
+   background-color: #bef4d4;
+   color: #1b7a43;
+}
+
+.App{
+   font-family: system-ui;
+}
+  /*
+ .pagination-btn {
+   background-color: #4CAF50;
+   color: white;
+   padding: 10px 20px;
+   border: none;
+   cursor: pointer;
+   font-size: 14px;
+ }
+ 
+ .pagination-btn:hover {
+   background-color: #45a049;
+ }
+ 
+ .pagination-info {
+   font-size: 14px;
+ }
+ 
+ .pagination-info strong {
+   font-weight: bold;
+ } */
+
+
+
+.spinner {
+   margin: 12rem auto;
+   width: 56px;
+   height: 56px;
+   border-radius: 50%;
+   border: 9px solid #f0e8ef;
+   animation: spinner-bulqg1 0.8s infinite linear alternate,
+        spinner-oaa3wk 1.6s infinite linear;
+}
+
+@keyframes spinner-bulqg1 {
+   0% {
+      clip-path: polygon(50% 50%, 0 0, 50% 0%, 50% 0%, 50% 0%, 50% 0%, 50% 0%);
+   }
+
+   12.5% {
+      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 0%);
+   }
+
+   25% {
+      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 100% 100%, 100% 100%);
+   }
+
+   50% {
+      clip-path: polygon(50% 50%, 0 0, 50% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
+   }
+
+   62.5% {
+      clip-path: polygon(50% 50%, 100% 0, 100% 0%, 100% 0%, 100% 100%, 50% 100%, 0% 100%);
+   }
+
+   75% {
+      clip-path: polygon(50% 50%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 50% 100%, 0% 100%);
+   }
+
+   100% {
+      clip-path: polygon(50% 50%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 50% 100%, 0% 100%);
+   }
+}
+
+@keyframes spinner-oaa3wk {
+   0% {
+      transform: scaleY(1) rotate(0deg);
+   }
+
+   49.99% {
+      transform: scaleY(1) rotate(135deg);
+   }
+
+   50% {
+      transform: scaleY(-1) rotate(0deg);
+   }
+
+   100% {
+      transform: scaleY(-1) rotate(-135deg);
+   }
+}
