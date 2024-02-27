@@ -20,7 +20,7 @@ function App() {
 
   async function getData() {
     setIsLoading(true)
-    const url = `http://www.omdbapi.com/?apikey=9f492cf2&${param}`;
+    const url = `https://www.omdbapi.com/?apikey=9f492cf2&${param}`;
     
    const {data}= await axios.get(url)
    setData(data)
