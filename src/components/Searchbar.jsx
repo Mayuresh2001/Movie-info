@@ -4,17 +4,14 @@ import React from "react";
 function Searchbar({  updateParam ,isLoading, setIsLoading, cardHidden, setCardHidden}) {
   
   let searchBox = document.querySelector(".searchbox");
-  const movieSearch = [];
   function clearSearch(){
    searchBox.value = '';
   }
 
  function name() {
     updateParam((prevParam) => {
-      movieSearch.push(searchBox.value);
       const newParam = new URLSearchParams(prevParam);
       newParam.set('s', searchBox.value);
-      console.log(movieSearch);
       return newParam.toString();
     });
     

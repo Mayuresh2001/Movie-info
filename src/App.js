@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Searchbar from "./components/Searchbar";
 import Cards from "./components/Cards";
+import axios from "axios";
 
 
 
@@ -21,13 +22,9 @@ function App() {
     setIsLoading(true)
     const url = `http://www.omdbapi.com/?apikey=9f492cf2&${param}`;
     
-    
-    await fetch(url, {
-      method: "GET",
-    })
-      .then((response) => response.json())
-      .then((response) => setData(response))
-      .catch((error) => console.log("Its not working:error", error));
+   const {data}= await axios.get(url)
+   setData(data)
+
     setIsLoading(false)
     console.log(data)
    

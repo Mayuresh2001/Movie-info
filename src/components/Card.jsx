@@ -22,7 +22,7 @@ function Card({ data, updateParam, cardHidden, setCardHidden, isLoading, setIsLo
     <div>
       {!cardHidden && (
          <div
-          className="Card w-52 h-[400px] flex flex-col hover:scale-110  transition-all bg-[#8D99AE] items-center cursor-pointer rounded-md m-auto origin-center"
+          className="Card w-52 h-[400px] flex flex-col hover:scale-110  transition-all bg-[#98C1D9] items-center cursor-pointer rounded-md m-auto origin-center"
           onClick={()=> fetchData()}>
           <div className="m-2 overflow-hidden">
             <img
