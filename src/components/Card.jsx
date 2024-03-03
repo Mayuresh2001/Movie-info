@@ -34,7 +34,7 @@ function Card({ data, updateParam, cardHidden, setCardHidden, isLoading, setIsLo
           </div>
 
           <div className="flex w-full bg-opacity-10 ">
-            <h1 className="font-semibold text-md mx-5 ">
+            <h1 className="font-semibold text-md mx-5 my-2 text-center">
               {data.Title}
               <span>({data.Year})</span>
             </h1>

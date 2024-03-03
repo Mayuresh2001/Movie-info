@@ -93,7 +93,10 @@ margin: 20px auto;
 }
 
 
-
+label input:placeholder-shown+button {
+   opacity: 0;
+   pointer-events: none;
+ }
 
 
 .btn-disabled{

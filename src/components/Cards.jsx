@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 import imgnotfound from "../image_not_found.png";
 import Card from "./Card";
 import Pagination from "./Pagination";
@@ -71,21 +71,21 @@ function Cards({
             <ul className="flex w-52 justify-evenly ">
               <li>
                 <button
-                  className="hover:bg-slate-200 p-3 pb-1"
+                  className="hover:text-black hover:bg-slate-200 transition-all p-3  duration-500 rounded-sm pb-1"
                   onClick={() => fetchAllData()}>
                   All
                 </button>
               </li>
               <li>
                 <button
-                  className="hover:bg-slate-200 p-3 pb-1"
+                  className="hover:text-black transition-all duration-500 hover:bg-slate-200 rounded-sm p-3 pb-1"
                   onClick={() => fetchMovieData()}>
                   Movies
                 </button>
               </li>
               <li>
                 <button
-                  className="hover:bg-slate-200 p-3 pb-1"
+                  className="hover:text-black hover:bg-slate-200 p-3 duration-500 rounded-sm pb-1"
                   onClick={() => fetchSeriesData()}>
                   Series
                 </button>

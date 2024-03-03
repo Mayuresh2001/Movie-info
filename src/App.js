@@ -46,7 +46,7 @@ function App() {
         <Searchbar cardHidden={cardHidden}
                   setCardHidden={setCardHidden} updateParam={updateParam} getData={getData} />
       </div>
-      <div className=" m-10 w-full mx-auto">
+      <div className=" mt-3 w-full mx-auto">
       
        <Cards cardHidden={cardHidden}
                   setCardHidden={setCardHidden} data={data} setData={setData} updateParam={updateParam} isLoading={isLoading} setIsLoading={ setIsLoading}/>
