@@ -1,5 +1,5 @@
-import React, { useEffect} from "react";
-import imgnotfound from "../image_not_found.png";
+import React, { useState } from "react";
+import placeholder from "../poster_placeholder.png";
 import Card from "./Card";
 import Pagination from "./Pagination";
 import Loader from "../components/Loader";
@@ -12,226 +12,267 @@ function Cards({
   setIsLoading,
   cardHidden,
   setCardHidden,
+  theme,
 }) {
-  let allMovies = [];
+  const isDark = theme === "dark";
+  const [activeFilter, setActiveFilter] = useState("all");
 
-  function getdata() {
-    if (data && data.Search && Array.isArray(data.Search)) {
-      allMovies = data.Search;
-    }
-    return allMovies;
+  let allMovies = [];
+  if (data && data.Search && Array.isArray(data.Search)) {
+    allMovies = data.Search;
   }
-  let results = data.totalResults;
+
+  const results = data?.totalResults;
 
   function fetchMovieData() {
+    setActiveFilter("movie");
     updateParam((prevParam) => {
       const newParam = new URLSearchParams(prevParam);
       newParam.set("type", "movie");
-
       return newParam.toString();
     });
   }
-  useEffect(() => {}, [cardHidden]);
 
   function fetchSeriesData() {
+    setActiveFilter("series");
     updateParam((prevParam) => {
       const newParam = new URLSearchParams(prevParam);
       newParam.set("type", "series");
-
       return newParam.toString();
     });
   }
-  function fetchAllData(movie) {
+
+  function fetchAllData() {
+    setActiveFilter("all");
     updateParam((prevParam) => {
       const newParam = new URLSearchParams(prevParam);
-
       newParam.delete("type");
       return newParam.toString();
     });
   }
 
-  if (data && data.Search && Array.isArray(data.Search)) {
-    allMovies = data.Search;
+  if (isLoading) return <Loader theme={theme} />;
+
+  // ── Detail view ──────────────────────────────────────────────────────────────
+  if (cardHidden) {
+    return (
+      <div className={`detail-container ${isDark ? "detail-dark" : "detail-light"}`}>
+        {/* Back button */}
+        <button
+          className="detail-back-btn"
+          onClick={() => setCardHidden(false)}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M19 12H6M12 5l-7 7 7 7" />
+          </svg>
+          Back to results
+        </button>
+
+        {/* Hero section */}
+        <div className="detail-hero">
+          {/* Poster */}
+          <div className="detail-poster-wrap">
+            <img
+              className="detail-poster"
+              src={!data.Poster || data.Poster === "N/A" ? placeholder : data.Poster}
+              alt={data.Title}
+              onError={(e) => { e.target.onerror = null; e.target.src = placeholder; }}
+            />
+          </div>
+
+          {/* Meta */}
+          <div className="detail-meta-wrap">
+            <h1 className="detail-title">{data.Title}</h1>
+            <div className="detail-year">{data.Year}</div>
+
+            {/* Badges row */}
+            <div className="detail-badges">
+              {data.Rated && data.Rated !== "N/A" && (
+                <span className="detail-badge rated">{data.Rated}</span>
+              )}
+              {data.Type && (
+                <span className="detail-badge type" style={{ textTransform: "capitalize" }}>
+                  {data.Type}
+                </span>
+              )}
+              {data.Runtime && data.Runtime !== "N/A" && (
+                <span className="detail-badge">{data.Runtime}</span>
+              )}
+              {data.Genre &&
+                data.Genre !== "N/A" &&
+                data.Genre.split(",").map((g) => (
+                  <span key={g.trim()} className="detail-badge">
+                    {g.trim()}
+                  </span>
+                ))}
+            </div>
+
+            {/* IMDb rating */}
+            {data.imdbRating && data.imdbRating !== "N/A" && (
+              <div className="imdb-rating">
+                <span className="imdb-label">IMDb</span>
+                <span className="imdb-score">{data.imdbRating}</span>
+                <span className="imdb-score-sub">/ 10</span>
+              </div>
+            )}
+
+            {/* Plot */}
+            {data.Plot && data.Plot !== "N/A" && (
+              <p className="detail-plot">{data.Plot}</p>
+            )}
+
+            {/* Info grid */}
+            <div className="detail-info-grid">
+              {data.Director && data.Director !== "N/A" && (
+                <div className="detail-info-item">
+                  <div className="detail-info-label">Director</div>
+                  <div className="detail-info-value">{data.Director}</div>
+                </div>
+              )}
+              {data.Actors && data.Actors !== "N/A" && (
+                <div className="detail-info-item">
+                  <div className="detail-info-label">Cast</div>
+                  <div className="detail-info-value">{data.Actors}</div>
+                </div>
+              )}
+              {data.Writer && data.Writer !== "N/A" && (
+                <div className="detail-info-item">
+                  <div className="detail-info-label">Writer</div>
+                  <div className="detail-info-value">{data.Writer}</div>
+                </div>
+              )}
+              {data.Language && data.Language !== "N/A" && (
+                <div className="detail-info-item">
+                  <div className="detail-info-label">Language</div>
+                  <div className="detail-info-value">{data.Language}</div>
+                </div>
+              )}
+              {data.Country && data.Country !== "N/A" && (
+                <div className="detail-info-item">
+                  <div className="detail-info-label">Country</div>
+                  <div className="detail-info-value">{data.Country}</div>
+                </div>
+              )}
+              {data.Released && data.Released !== "N/A" && (
+                <div className="detail-info-item">
+                  <div className="detail-info-label">Released</div>
+                  <div className="detail-info-value">{data.Released}</div>
+                </div>
+              )}
+              {data.BoxOffice && data.BoxOffice !== "N/A" && (
+                <div className="detail-info-item">
+                  <div className="detail-info-label">Box Office</div>
+                  <div className="detail-info-value">{data.BoxOffice}</div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Awards banner */}
+        {data.Awards && data.Awards !== "N/A" && (
+          <div className="awards-banner">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{ flexShrink: 0 }}
+            >
+              <circle cx="12" cy="8" r="7" />
+              <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
+            </svg>
+            <span>{data.Awards}</span>
+          </div>
+        )}
+      </div>
+    );
   }
 
-  return isLoading ? (
-    <Loader />
-  ) : (
-    <div className="flex flex-col justify-center ">
-      {results === undefined ? null : (
-        <p className="text-white text-xl p-5 pl-14">
-          {results <= 1
-            ? `${results} Result Found`
-            : `${results} Results Found`}
-        </p>
-      )}
-      <div>
-        {results >= 1 ? (
-          <div className="text-white -mt-2">
-            <ul className="flex w-52 justify-evenly ">
-              <li>
-                <button
-                  className="hover:text-black hover:bg-slate-200 transition-all p-3  duration-500 rounded-sm pb-1"
-                  onClick={() => fetchAllData()}>
-                  All
-                </button>
-              </li>
-              <li>
-                <button
-                  className="hover:text-black transition-all duration-500 hover:bg-slate-200 rounded-sm p-3 pb-1"
-                  onClick={() => fetchMovieData()}>
-                  Movies
-                </button>
-              </li>
-              <li>
-                <button
-                  className="hover:text-black hover:bg-slate-200 p-3 duration-500 rounded-sm pb-1"
-                  onClick={() => fetchSeriesData()}>
-                  Series
-                </button>
-              </li>
-            </ul>
-            <hr className="h-[1px] w-full  bg-orange-600" />
-          </div>
-        ) : null}
-      </div>
-      {!cardHidden && (
-        <div className="m-auto flex bg-[#3D5A80] flex-col">
-          <div className="Cards inline-flex flex-wrap my- max-w-[90%] gap-6 m-[5%]">
-            {getdata().map((data) => {
-              return (
-                <Card
-                  key={data.id}
-                  setData={setData}
-                  data={data}
-                  updateParam={updateParam}
-                  cardHidden={cardHidden}
-                  setCardHidden={setCardHidden}
-                  isLoading={isLoading}
-                  setIsLoading={setIsLoading}
-                />
-              );
-            })}
-          </div>
-          <br />
-          <div className="m-auto mb-5">
-            {results >= 11 ? (
-              <Pagination results={results} updateParam={updateParam} />
-            ) : null}
-          </div>
+  // ── Grid view ─────────────────────────────────────────────────────────────────
+  return (
+    <div className={`cards-section ${isDark ? "cards-dark" : "cards-light"}`}>
+      {/* Filter + results bar */}
+      {results !== undefined && (
+        <div className="results-bar">
+          <p className="results-info">
+            <span>{results}</span> {results <= 1 ? "result" : "results"} found
+          </p>
+
+          {results >= 1 && (
+            <div className="filter-bar">
+              <button
+                className={`filter-tab ${activeFilter === "all" ? "active" : ""}`}
+                onClick={fetchAllData}
+              >
+                All
+              </button>
+              <button
+                className={`filter-tab ${activeFilter === "movie" ? "active" : ""}`}
+                onClick={fetchMovieData}
+              >
+                🎬 Movies
+              </button>
+              <button
+                className={`filter-tab ${activeFilter === "series" ? "active" : ""}`}
+                onClick={fetchSeriesData}
+              >
+                📺 Series
+              </button>
+            </div>
+          )}
         </div>
       )}
 
-      {cardHidden && (
-        <div className="flex bg-[#3D5A80] flex-col justify-center ">
-          <div>
-            <button
-              className=""
-              title="Go Back"
-              onClick={() => {
-                setCardHidden(false);
-              }}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="28"
-                height="28"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#000000"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round">
-                <path d="M19 12H6M12 5l-7 7 7 7" />
-              </svg>
-            </button>
-          </div>
-          <div className=" flex justify flex-col mb-28 bg-[#86bbd8] w-3/4 rounded-md  mx-auto">
-            {/* Title */}
-            <div className="bg-black w-full text-white">
-              <h1 className=" m-auto text-6xl p-12 text-center ">
-                {data.Title} <br/>
-                <span> ({data.Year})</span>
-              </h1>
-
-
-              <div className="flex p-5 m-2 justify-evenly items-end pb-4">
-                <div>
-                  <span className=" border-white p-1 -x-2 border-[3px]">{data.Rated}</span>
-                </div>
-                <div className="capitalize">
-                {data.Type}
-                </div>
-                <div>
-                {data.Runtime}
-                </div>
-                <div className="w-36 text-center">
-                {data.Language}
-                </div>
-                <div>
-                {data.Genre}
-                </div>
-                <div>
-                {data.Released}
-                </div>
-              
-                <div>
-                {data.Country}
-                </div>
-              </div>
-
-            </div>
-            <div className="card1 w-10/12  m-auto text-white flex flex-row justify-evenly items-center">
-              <div className="w-2/5">
-                <img
-                  className="w-72 m-auto pointer-events-none	rounded-sm"
-                  src={data.Poster === "N/A" ? imgnotfound : data.Poster}
-                  alt={data.Title}
-                />
-              </div>
-              <div className="w-1/2 p-10">
-              
-              {/* Imbd */}
-                <p className="font-semibold">
-                  <span className="bg-[#ebbf17] text-black px-2 p-1 rounded-lg font-bold text-lg">IMbd</span> {data.imdbRating}
-                </p>
-               
-                <p><span className="font-semibold text-black p-1">Cast: </span> {data.Actors}</p>
-                
-                
-                <p><span className="font-semibold text-black p-1">Director:</span> {data.Director}</p>
-                
-          
-                <p className="w-80"><span className="font-semibold text-black p-1 pb-2">Plot:</span>{data.Plot}</p>
-                
-                <p><span className="font-semibold text-black p-1 pb-2">Writer: </span>{data.Writer}</p>
-              
-                <p><span className="font-semibold text-black p-1">Box Office: </span>{data.BoxOffice}</p>
-                <p><span className="font-semibold text-black p-1 pb-2">Production: </span>{data.Production}</p>
-                <p className="flex w-80">
-                  <span>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="feather feather-award text-black">
-                      <circle cx="12" cy="8" r="7"></circle>
-                      <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
-                    </svg>
-                  </span>
-                  <span className="font-semibold text-black p-1">Awards: </span>{data.Awards}
-                </p>
-              </div>
-            </div>
-          </div>
+      {/* Empty / no-search state */}
+      {allMovies.length === 0 && !isLoading && (
+        <div className="empty-state">
+          <div className="empty-state-icon">🎬</div>
+          <h3>Find your next favourite</h3>
+          <p>Search for any movie or TV show above to get started</p>
         </div>
+      )}
+
+      {/* Cards grid */}
+      {allMovies.length > 0 && (
+        <div className="cards-grid">
+          {allMovies.map((movie) => (
+            <Card
+              key={movie.imdbID}
+              setData={setData}
+              data={movie}
+              updateParam={updateParam}
+              cardHidden={cardHidden}
+              setCardHidden={setCardHidden}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+              theme={theme}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Pagination */}
+      {results >= 11 && (
+        <Pagination results={results} updateParam={updateParam} theme={theme} />
       )}
     </div>
   );
 }
+
 export default Cards;
