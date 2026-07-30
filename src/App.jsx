@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Searchbar from "./components/Searchbar";
 import Cards from "./components/Cards";
@@ -27,7 +27,9 @@ function App() {
 
   async function getData() {
     setIsLoading(true);
-    const url = `https://www.omdbapi.com/?apikey=9f492cf2&${param}`;
+    const API_URL = import.meta.env.VITE_API_URL;
+    const API_KEY = import.meta.env.VITE_API_KEY;
+    const url = `${API_URL}?apikey=${API_KEY}&${param}`;
     const { data } = await axios.get(url);
     setData(data);
     setIsLoading(false);
@@ -41,13 +43,14 @@ function App() {
   return (
     <div className={`App ${theme}`}>
       <Navbar theme={theme} toggleTheme={toggleTheme} />
-      <Searchbar
+      <>  <Searchbar
         cardHidden={cardHidden}
         setCardHidden={setCardHidden}
         updateParam={updateParam}
         getData={getData}
         theme={theme}
       />
+      </>
       <Cards
         cardHidden={cardHidden}
         setCardHidden={setCardHidden}

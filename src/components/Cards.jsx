@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { ArrowLeft, Award, Clapperboard, Tv, Play } from "lucide-react";
 import placeholder from "../poster_placeholder.png";
 import Card from "./Card";
 import Pagination from "./Pagination";
@@ -53,6 +54,21 @@ function Cards({
 
   if (isLoading) return <Loader theme={theme} />;
 
+  const handleWatchNow = (data) => {
+    const { Type, imdbID } = data;
+
+    const urlHandler = (type) => {
+      const watchNowUrl = `https://zxcprime.xyz/player/${type}/${imdbID}`;
+      window.open(watchNowUrl, "_self");
+    }
+
+    if (Type === "series") {
+      urlHandler("tv")
+    } else {
+      urlHandler("movie")
+    }
+  }
+
   // ── Detail view ──────────────────────────────────────────────────────────────
   if (cardHidden) {
     return (
@@ -62,19 +78,7 @@ function Cards({
           className="detail-back-btn"
           onClick={() => setCardHidden(false)}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M19 12H6M12 5l-7 7 7 7" />
-          </svg>
+          <ArrowLeft size={16} strokeWidth={2} />
           Back to results
         </button>
 
@@ -117,14 +121,26 @@ function Cards({
                 ))}
             </div>
 
-            {/* IMDb rating */}
-            {data.imdbRating && data.imdbRating !== "N/A" && (
-              <div className="imdb-rating">
-                <span className="imdb-label">IMDb</span>
-                <span className="imdb-score">{data.imdbRating}</span>
-                <span className="imdb-score-sub">/ 10</span>
-              </div>
-            )}
+            {/* Actions: IMDb + Watch Now */}
+            <div className="detail-actions">
+              {/* IMDb rating */}
+              {data.imdbRating && data.imdbRating !== "N/A" && (
+                <div className="imdb-rating">
+                  <span className="imdb-label">IMDb</span>
+                  <span className="imdb-score">{data.imdbRating}</span>
+                  <span className="imdb-score-sub">/ 10</span>
+                </div>
+              )}
+
+              {/* Watch Now Button */}
+              <button
+                className="watch-now-btn"
+                onClick={() => handleWatchNow(data)}
+              >
+                <Play size={16} fill="currentColor" />
+                <span>Watch Now</span>
+              </button>
+            </div>
 
             {/* Plot */}
             {data.Plot && data.Plot !== "N/A" && (
@@ -182,21 +198,7 @@ function Cards({
         {/* Awards banner */}
         {data.Awards && data.Awards !== "N/A" && (
           <div className="awards-banner">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              style={{ flexShrink: 0 }}
-            >
-              <circle cx="12" cy="8" r="7" />
-              <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88" />
-            </svg>
+            <Award size={20} strokeWidth={2} style={{ flexShrink: 0 }} />
             <span>{data.Awards}</span>
           </div>
         )}
@@ -226,13 +228,13 @@ function Cards({
                 className={`filter-tab ${activeFilter === "movie" ? "active" : ""}`}
                 onClick={fetchMovieData}
               >
-                🎬 Movies
+                <Clapperboard size={14} style={{ marginRight: 4 }} /> Movies
               </button>
               <button
                 className={`filter-tab ${activeFilter === "series" ? "active" : ""}`}
                 onClick={fetchSeriesData}
               >
-                📺 Series
+                <Tv size={14} style={{ marginRight: 4 }} /> Series
               </button>
             </div>
           )}
@@ -242,7 +244,7 @@ function Cards({
       {/* Empty / no-search state */}
       {allMovies.length === 0 && !isLoading && (
         <div className="empty-state">
-          <div className="empty-state-icon">🎬</div>
+          <div className="empty-state-icon"><Clapperboard size={48} /></div>
           <h3>Find your next favourite</h3>
           <p>Search for any movie or TV show above to get started</p>
         </div>

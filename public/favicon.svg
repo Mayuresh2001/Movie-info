@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <defs>
+    <linearGradient id="redGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e63946" />
+      <stop offset="100%" stop-color="#c1121f" />
+    </linearGradient>
+  </defs>
+  <!-- Background icon shape -->
+  <path d="M20.2 6h-17c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h17c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2z" fill="url(#redGrad)" stroke="none" />
+  <path d="M2 8h20" stroke="#fff" stroke-width="1.5" />
+  <path d="M6 3L3 8" stroke="#fff" stroke-width="1.5" />
+  <path d="M11 3l-3 5" stroke="#fff" stroke-width="1.5" />
+  <path d="M16 3l-3 5" stroke="#fff" stroke-width="1.5" />
+  <path d="M21 3l-3 5" stroke="#fff" stroke-width="1.5" />
+</svg>

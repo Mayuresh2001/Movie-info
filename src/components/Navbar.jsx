@@ -1,4 +1,5 @@
 import React from 'react';
+import { Clapperboard, Moon, Sun } from 'lucide-react';
 
 export default function Navbar({ theme, toggleTheme }) {
   const isDark = theme === 'dark';
@@ -8,7 +9,7 @@ export default function Navbar({ theme, toggleTheme }) {
       <div className="navbar-inner">
         {/* Brand */}
         <div className="navbar-brand">
-          <div className="navbar-logo-icon">🎬</div>
+          <div className="navbar-logo-icon"><Clapperboard size={24} /></div>
           <div>
             <div className="navbar-title">CineSearch</div>
             <div className="navbar-subtitle">Movies &amp; TV Shows</div>
@@ -24,7 +25,7 @@ export default function Navbar({ theme, toggleTheme }) {
         >
           <span className="theme-toggle-track">
             <span className="theme-toggle-thumb">
-              {isDark ? '🌙' : '☀️'}
+              {isDark ? <Moon size={16} /> : <Sun size={16} />}
             </span>
           </span>
           <span className="theme-toggle-label">

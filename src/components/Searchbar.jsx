@@ -1,11 +1,12 @@
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import { SlidersHorizontal, Search, X } from "lucide-react";
+import { useRef, useState, useEffect, useCallback } from "react";
 
 // Popular genre/mood quick-search chips
 const QUICK_SEARCHES = [
   "Action", "Comedy", "Horror", "Sci-Fi", "Thriller", "Romance", "Drama", "Animation",
 ];
 
-function Searchbar({ updateParam, cardHidden, setCardHidden, theme }) {
+function Searchbar({ updateParam, setCardHidden, theme }) {
   const isDark = theme === "dark";
   const inputRef = useRef(null);
   const debounceTimer = useRef(null);
@@ -80,13 +81,7 @@ function Searchbar({ updateParam, cardHidden, setCardHidden, theme }) {
         <div className={`search-input-group ${isFocused ? "search-focused" : ""}`}>
 
           {/* Magnifier */}
-          <svg className={`search-icon ${isFocused ? "search-icon-active" : ""}`}
-            xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-            viewBox="0 0 24 24" fill="none" stroke="currentColor"
-            strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="11" cy="11" r="8" />
-            <path d="m21 21-4.35-4.35" />
-          </svg>
+          <Search className={`search-icon ${isFocused ? "search-icon-active" : ""}`} size={18} strokeWidth={2} />
 
           {/* Input */}
           <input
@@ -117,30 +112,33 @@ function Searchbar({ updateParam, cardHidden, setCardHidden, theme }) {
             <button onClick={handleClear} title="Clear (Esc)"
               className={`search-clear-btn ${isDark ? "clear-dark" : "clear-light"}`}
               aria-label="Clear search">
-              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13"
-                viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M18 6 6 18" /><path d="m6 6 12 12" />
-              </svg>
+              <X size={13} strokeWidth={2.5} />
             </button>
           )}
 
-          {/* Search button */}
-          <button
-            className="search-submit-btn"
-            type="button"
-            onClick={() => { clearTimeout(debounceTimer.current); fireSearch(value); }}
-            aria-label="Search"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
-              viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-              style={{ marginRight: "6px" }}>
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.35-4.35" />
-            </svg>
-            Search
-          </button>
+          {/* Search + Filter buttons */}
+          <div className="search-actions-group">
+            {value.length > 0 && (
+              <button
+                onClick={() => {}}
+                title="Filters"
+                className={`filter-pop-btn ${isDark ? "filter-pop-dark" : "filter-pop-light"}`}
+                aria-label="Filters"
+              >
+                <SlidersHorizontal size={18} strokeWidth={2} />
+              </button>
+            )}
+
+            <button
+              className="search-submit-btn"
+              type="button"
+              onClick={() => { clearTimeout(debounceTimer.current); fireSearch(value); }}
+              aria-label="Search"
+            >
+              <Search size={15} strokeWidth={2.5} style={{ marginRight: "6px" }} />
+              Search
+            </button>
+          </div>
         </div>
 
         {/* ── Quick-search chips ── */}

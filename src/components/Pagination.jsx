@@ -1,5 +1,6 @@
-import React from 'react';
-import ReactPaginate from 'react-paginate';
+import ReactPaginateModule from 'react-paginate';
+
+const ReactPaginate = ReactPaginateModule.default || ReactPaginateModule;
 
 function Pagination({ updateParam, results, theme }) {
   const pages = Math.ceil(results / 10);
