@@ -1,5 +1,5 @@
-import React from 'react';
-import { Clapperboard, Moon, Sun } from 'lucide-react';
+import { Clapperboard } from 'lucide-react';
+import ThemeToggle from './ThemeToggle';
 
 export default function Navbar({ theme, toggleTheme }) {
   const isDark = theme === 'dark';
@@ -17,21 +17,7 @@ export default function Navbar({ theme, toggleTheme }) {
         </div>
 
         {/* Theme Toggle */}
-        <button
-          onClick={toggleTheme}
-          className={`theme-toggle ${isDark ? 'theme-toggle-dark' : 'theme-toggle-light'}`}
-          title={isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-          aria-label="Toggle theme"
-        >
-          <span className="theme-toggle-track">
-            <span className="theme-toggle-thumb">
-              {isDark ? <Moon size={16} /> : <Sun size={16} />}
-            </span>
-          </span>
-          <span className="theme-toggle-label">
-            {isDark ? 'Dark' : 'Light'}
-          </span>
-        </button>
+       <ThemeToggle theme={theme} toggleTheme={toggleTheme} />
       </div>
     </div>
   );

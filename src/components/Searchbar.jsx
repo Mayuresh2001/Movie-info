@@ -1,4 +1,4 @@
-import { SlidersHorizontal, Search, X } from "lucide-react";
+import { Search, X } from "lucide-react";
 import { useRef, useState, useEffect, useCallback } from "react";
 
 // Popular genre/mood quick-search chips
@@ -100,13 +100,6 @@ function Searchbar({ updateParam, setCardHidden, theme }) {
             aria-label="Search movies and TV shows"
           />
 
-          {/* Live char count */}
-          {value.length > 0 && (
-            <span className={`search-char-count ${isDark ? "count-dark" : "count-light"}`}>
-              {value.length}
-            </span>
-          )}
-
           {/* Clear */}
           {value.length > 0 && (
             <button onClick={handleClear} title="Clear (Esc)"
@@ -117,45 +110,82 @@ function Searchbar({ updateParam, setCardHidden, theme }) {
           )}
 
           {/* Search + Filter buttons */}
-          <div className="search-actions-group">
+          {/* <div className="search-actions-group">
             {value.length > 0 && (
               <button
-                onClick={() => {}}
+                onClick={() => {setFilters(true)}}
                 title="Filters"
                 className={`filter-pop-btn ${isDark ? "filter-pop-dark" : "filter-pop-light"}`}
                 aria-label="Filters"
               >
                 <SlidersHorizontal size={18} strokeWidth={2} />
               </button>
-            )}
+            )} */}
 
-            <button
-              className="search-submit-btn"
-              type="button"
-              onClick={() => { clearTimeout(debounceTimer.current); fireSearch(value); }}
-              aria-label="Search"
-            >
-              <Search size={15} strokeWidth={2.5} style={{ marginRight: "6px" }} />
-              Search
-            </button>
-          </div>
-        </div>
-
-        {/* ── Quick-search chips ── */}
-        <div className="search-chips">
-          {QUICK_SEARCHES.map((chip) => (
-            <button
-              key={chip}
-              className={`search-chip ${value === chip ? "chip-active" : ""} ${isDark ? "chip-dark" : "chip-light"}`}
-              onClick={() => handleChip(chip)}
-              type="button"
-            >
-              {chip}
-            </button>
-          ))}
+          <button
+            className="search-submit-btn"
+            type="button"
+            onClick={() => { clearTimeout(debounceTimer.current); fireSearch(value); }}
+            aria-label="Search"
+          >
+            <Search size={15} strokeWidth={2.5} style={{ marginRight: "6px" }} />
+            Search
+          </button>
         </div>
       </div>
+
+      {/* ── Quick-search chips ── */}
+      <div className=" flex flex-wrap gap-2 justify-center mt-3">
+        {QUICK_SEARCHES.map((chip) => (
+          <button
+            key={chip}
+            className={`
+    px-[15px] py-[5px]
+    rounded-full
+    text-[0.78rem]
+    font-medium
+    font-['Inter']
+    cursor-pointer
+    transition-all duration-[var(--transition)]
+    border-border
+ border-2
+
+    ${value === chip
+                ? `
+          bg-[linear-gradient(135deg,var(--red),var(--red-dark))]
+              text-white
+              shadow-[0_2px_12px_var(--red-glow)]
+          border-transparent!
+
+        `
+                : isDark
+                  ? `
+            bg-[#ffffff0d]
+            border-[#ffffff17]
+            text-[#4a5f72]
+            hover:bg-[#e639461a]
+            hover:border-[rgba(230,57,70,0.3)]
+            hover:text-[#e0e0e0]
+          `
+                  : `
+            bg-[rgba(0,0,0,0.04)]
+            border-[rgba(0,0,0,0.08)]
+            text-[#8899aa]
+            hover:bg-[#e6394612]
+            hover:border-[#e6394638]
+            hover:text-[#1a1d2e]
+          `
+              }
+  `}
+            onClick={() => handleChip(chip)}
+            type="button"
+          >
+            {chip}
+          </button>
+        ))}
+      </div>
     </div>
+
   );
 }
 

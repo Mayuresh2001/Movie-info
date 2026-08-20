@@ -3,6 +3,31 @@
 @import "tailwindcss";
 @config "../tailwind.config.js";
 
+
+:root[data-theme='light'] {
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --primary-color: #321fdb;
+   --color-hover-bg: #e6394612;
+   --color-hover-border: #e6394638;
+   --color-hover-text: #1a1d2e
+}
+
+:root[data-theme='dark'] {
+  --bg-color: #181924;
+  /* linear-gradient(135deg, #090d18 0%, #0d1423 60%, #0a1019 100%) */
+  --text-color: #ffffff;
+  --primary-color: #4638c2;
+  --hover-text: #e0e0e0;
+}
+/* window.matchMedia('(prefers-color-scheme: dark)') read more about it */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s ease;
+}
+
+
 /* ======================================================
    RESET & BASE
 ====================================================== */
@@ -27,7 +52,7 @@ html {
 /* ======================================================
    APP WRAPPER – DARK / LIGHT
 ====================================================== */
-.App {
+.Home {
   min-height: 100vh;
   font-family: 'Inter', sans-serif;
   transition: background var(--transition), color var(--transition);
@@ -35,12 +60,12 @@ html {
 }
 
 /* Dark mode */
-.App.dark {
+.Home.dark {
   background: linear-gradient(135deg, #090d18 0%, #0d1423 60%, #0a1019 100%);
   color: #f0f0f0;
 }
 
-.App.dark::before {
+.Home.dark::before {
   content: '';
   position: fixed;
   inset: 0;
@@ -52,12 +77,12 @@ html {
 }
 
 /* Light mode */
-.App.light {
+.Home.light {
   background: linear-gradient(135deg, #f8f9ff 0%, #eef0f8 50%, #f4f5fc 100%);
   color: #1a1d2e;
 }
 
-.App.light::before {
+.Home.light::before {
   content: '';
   position: fixed;
   inset: 0;
@@ -562,13 +587,7 @@ html {
 }
 
 /* ── Quick-search chips ── */
-.search-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 14px;
-  justify-content: center;
-}
+
 
 .search-chip {
   padding: 5px 15px;
@@ -582,8 +601,8 @@ html {
 }
 
 .chip-dark {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.09);
+  background: #ffffff0d;
+  border-color: #ffffff17;
   color: #4a5f72;
 }
 
@@ -600,8 +619,8 @@ html {
 }
 
 .chip-light:hover {
-  background: rgba(230, 57, 70, 0.07);
-  border-color: rgba(230, 57, 70, 0.22);
+  background: #e6394612;
+  border-color: #e6394638;
   color: #1a1d2e;
 }
 

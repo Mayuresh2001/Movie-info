@@ -1,15 +1,14 @@
-import React from "react";
 import placeholder from "../poster_placeholder.png";
 
-function Card({ data, updateParam, cardHidden, setCardHidden, isLoading, setIsLoading, theme }) {
+function Card({ data, updateParam, cardHidden, setCardHidden, setIsLoading, theme }) {
   const isDark = theme === "dark";
 
-  function fetchData() {
+  async function fetchData() {
     setIsLoading(true);
     setCardHidden(true);
-    updateParam((prevParam) => {
+    await updateParam((prevParam) => {
       const newParam = new URLSearchParams(prevParam);
-      newParam.delete("s");
+      newParam.forEach((_, key) => newParam.delete(key));
       newParam.set("i", data.imdbID);
       setIsLoading(false);
       return newParam.toString();
@@ -30,7 +29,7 @@ function Card({ data, updateParam, cardHidden, setCardHidden, isLoading, setIsLo
           src={!data.Poster || data.Poster === "N/A" ? placeholder : data.Poster}
           alt={data.Title}
           loading="lazy"
-          className="movie-card-poster"
+          className="movie-card-poster select-none [-webkit-user-drag:none]"
           onError={(e) => { e.target.onerror = null; e.target.src = placeholder; }}
         />
         <div className="movie-card-overlay" />
