@@ -1,48 +1,50 @@
-import React, { useState, useEffect } from "react";
-import NAimage from "../image_not_found.png";
-function Card({ data, updateParam, cardHidden, setCardHidden, isLoading, setIsLoading }) {
-  // search suggestion
-  // console.log('ousidefetchdat',data)
+import placeholder from "../poster_placeholder.png";
 
-
-  function fetchData() {
+function Card({ data, updateParam, cardHidden, setCardHidden, setIsLoading, theme }) {
+  const isDark = theme === "dark";
+  async function fetchData() {
     setIsLoading(true);
     setCardHidden(true);
     updateParam((prevParam) => {
       const newParam = new URLSearchParams(prevParam);
-      newParam.delete("s");
-      newParam.set("i",data.imdbID );
-      console.log("crad hide from card",cardHidden)
-      setIsLoading(false)
+      newParam.forEach((_, key) => newParam.delete(key));
+      newParam.set("i", data.imdbID);
       return newParam.toString();
     });
   }
 
+  if (cardHidden) return null;
+
   return (
-    <div>
-      {!cardHidden && (
-         <div
-          className="Card w-52 h-[400px] flex flex-col hover:scale-110  transition-all bg-[#98C1D9] items-center cursor-pointer rounded-md m-auto origin-center"
-          onClick={()=> fetchData()}>
-          <div className="m-2 overflow-hidden">
-            <img
-              src={data.Poster === "N/A" ? NAimage : data.Poster}
-              alt={data.Title} loading="lazy"
-              className=" 
-              pointer-events-none	w-64 lazy rounded-lg h-96 "
-            />
-          </div>
+    <div
+      className={`movie-card ${isDark ? "card-dark" : "card-light"}`}
+      onClick={fetchData}
+      title={data.Title}
+    >
+      {/* Poster */}
+      <div style={{ overflow: "hidden", position: "relative" }}>
+        <img
+          src={!data.Poster || data.Poster === "N/A" ? placeholder : data.Poster}
+          alt={data.Title}
+          loading="lazy"
+          className="movie-card-poster select-none [-webkit-user-drag:none]"
+          onError={(e) => { e.target.onerror = null; e.target.src = placeholder; }}
+        />
+        <div className="movie-card-overlay" />
 
-          <div className="flex w-full bg-opacity-10 ">
-            <h1 className="font-semibold text-md mx-5 my-2 text-center">
-              {data.Title}
-              <span>({data.Year})</span>
-            </h1>
-          </div>
-         
-        </div>
-      )}
+        {/* Type badge */}
+        {data.Type && (
+          <span className="movie-card-type-badge">
+            {data.Type === "series" ? "TV" : data.Type}
+          </span>
+        )}
+      </div>
 
+      {/* Info overlay */}
+      <div className="movie-card-info">
+        <div className="movie-card-title">{data.Title}</div>
+        <div className="movie-card-year">{data.Year}</div>
+      </div>
     </div>
   );
 }

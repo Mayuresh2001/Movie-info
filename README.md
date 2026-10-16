@@ -1,71 +1,297 @@
-Live Hosted : [Movie App](https://movie-info-mayuresh01.netlify.app).
-# Getting Started with Create React App
+# React + Vite
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Available Scripts
+Currently, two official plugins are available:
 
-In the project directory, you can run:
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-### `npm start`
+## React Compiler
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Expanding the ESLint configuration
 
-### `npm test`
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+A clean structure would be:
 
-### `npm run build`
+src/
+├── assets/
+│   ├── images/
+│   ├── icons/
+│   └── fonts/
+│
+├── components/
+│   ├── common/
+│   │   ├── Button.jsx
+│   │   ├── Modal.jsx
+│   │   └── Spinner.jsx
+│   │
+│   ├── layout/
+│   │   ├── Navbar.jsx
+│   │   ├── Sidebar.jsx
+│   │   └── Footer.jsx
+│   │
+│   └── ui/
+│       ├── Card.jsx
+│       ├── Input.jsx
+│       └── Badge.jsx
+│
+├── pages/
+│   ├── Home/
+│   │   ├── Home.jsx
+│   │   ├── Home.css
+│   │   └── components/
+│   │       ├── Hero.jsx
+│   │       ├── Features.jsx
+│   │       └── Testimonials.jsx
+│   │
+│   ├── About/
+│   │   ├── About.jsx
+│   │   └── About.css
+│   │
+│   └── Contact/
+│       ├── Contact.jsx
+│       └── Contact.css
+│
+├── hooks/
+│   ├── useTheme.js
+│   ├── useDebounce.js
+│   └── useLocalStorage.js
+│
+├── utils/
+│   ├── cn.js
+│   ├── formatDate.js
+│   ├── formatCurrency.js
+│   └── validators.js
+│
+├── services/
+│   ├── api.js
+│   └── auth.js
+│
+├── constants/
+│   ├── routes.js
+│   └── config.js
+│
+├── context/
+│   └── ThemeContext.jsx
+│
+├── styles/
+│   ├── globals.css
+│   ├── variables.css
+│   └── components.css
+│
+├── App.jsx
+└── main.jsx
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Simple Rule:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+utils/       → generic helpers
+hooks/       → reusable React hooks
+components/  → reusable UI
+pages/       → route-level pages
+features/    → feature-specific logic/UI
+services/    → API/external communication
+constants/   → shared constants
+styles/      → global styles/theme
+assets/      → images/fonts/icons
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+For Larger application
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+src/
+├── app/
+│   ├── App.jsx
+│   ├── routes.jsx
+│   └── providers.jsx
+│
+├── features/
+│   ├── auth/
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   ├── services/
+│   │   └── utils/
+│   │
+│   ├── dashboard/
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   └── services/
+│   │
+│   └── profile/
+│       ├── components/
+│       └── services/
+│
+├── components/
+│   ├── ui/
+│   └── layout/
+│
+├── hooks/
+├── utils/
+├── services/
+├── constants/
+├── assets/
+└── styles/
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+I'd put the page-specific CSS next to the page:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+pages/
+└── Home/
+    ├── Home.jsx
+    ├── Home.css
+    └── components/
+        ├── Hero.jsx
+        ├── Hero.css
+        ├── Features.jsx
+        └── Features.css
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<!-- Chagpt response -->
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
+        Yes. The effect you’re referring to is a **sliding pill/thumb**: the active background doesn't disappear and reappear on each button; one pill smoothly moves to the newly selected tab. uiCookies describes that pattern as a segmented control with a sliding thumb. ([uiCookies][1])
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+For your **All / Movies / Series** tabs, I’d implement it this way rather than animating each button's background.
 
-### Making a Progressive Web App
+### 1. Put one sliding indicator behind the buttons
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```jsx
+<div className="relative flex w-fit flex-wrap gap-1 rounded-full bg-black/[0.03] p-1 dark:bg-white/[0.04]">
+  {/* Sliding pill */}
+  <div
+    className={`
+      absolute inset-y-1
+      rounded-full
+      bg-[linear-gradient(135deg,var(--red),var(--red-dark))]
+      shadow-[0_2px_12px_var(--red-glow)]
+      transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]
+      ${activeFilter === "all" ? "left-1 w-[58px]" : ""}
+      ${activeFilter === "movie" ? "left-[62px] w-[95px]" : ""}
+      ${activeFilter === "series" ? "left-[161px] w-[91px]" : ""}
+    `}
+  />
 
-### Advanced Configuration
+  <button
+    onClick={fetchAllData}
+    className="relative z-10 rounded-full px-4 py-[5px] text-[0.82rem] font-medium text-[#6b7a8d] transition-colors duration-300 data-[active=true]:text-white"
+    data-active={activeFilter === "all"}
+  >
+    All
+  </button>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+  <button
+    onClick={fetchMovieData}
+    className="relative z-10 flex items-center gap-1 rounded-full px-4 py-[5px] text-[0.82rem] font-medium text-[#6b7a8d] transition-colors duration-300 data-[active=true]:text-white"
+    data-active={activeFilter === "movie"}
+  >
+    <Clapperboard size={14} />
+    Movies
+  </button>
 
-### Deployment
+  <button
+    onClick={fetchSeriesData}
+    className="relative z-10 flex items-center gap-1 rounded-full px-4 py-[5px] text-[0.82rem] font-medium text-[#6b7a8d] transition-colors duration-300"
+    data-active={activeFilter === "series"}
+  >
+    <Tv size={14} />
+    Series
+  </button>
+</div>
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### But there's a better solution
 
-### `npm run build` fails to minify
+Don't hardcode:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```text
+left-1
+left-[62px]
+left-[161px]
+```
+
+because the pill will break if you change text, padding, or font size.
+
+Instead, use **one sliding element whose position/width is calculated from the selected button**.
+
+For React, I'd use a ref:
+
+```jsx
+const [indicator, setIndicator] = useState({
+  left: 0,
+  width: 0,
+});
+```
+
+Then measure the active button:
+
+```jsx
+const updateIndicator = (element) => {
+  setIndicator({
+    left: element.offsetLeft,
+    width: element.offsetWidth,
+  });
+};
+```
+
+And:
+
+```jsx
+<div className="relative flex w-fit gap-1 rounded-full bg-black/[0.03] p-1 dark:bg-white/[0.04]">
+
+  <div
+    className="
+      absolute top-1 bottom-1
+      rounded-full
+      bg-[linear-gradient(135deg,var(--red),var(--red-dark))]
+      shadow-[0_2px_12px_var(--red-glow)]
+      transition-[left,width]
+      duration-300
+      ease-out
+    "
+    style={{
+      left: indicator.left,
+      width: indicator.width,
+    }}
+  />
+
+  {/* buttons */}
+</div>
+```
+
+Now the animation is literally:
+
+```css
+transition: left 300ms ease-out, width 300ms ease-out;
+```
+
+so the pill **slides and resizes** between tabs instead of the background flashing between states.
+
+### One more improvement
+
+For the effect you're after, I'd actually make the structure:
+
+```text
+┌─────────────────────────────────────┐
+│  ┌─────┐                            │
+│  │ All │  Movies      Series        │
+│  └─────┘                            │
+└─────────────────────────────────────┘
+       ↓
+     slides
+             ┌───────────────┐
+             │    Movies     │
+             └───────────────┘
+```
+
+The **buttons themselves stay transparent**. Only the single absolute pill moves underneath them.
+
+That's the key difference from your current implementation.
+
+If you want the **exact uiCookies-style animation**, including the pill sliding with a slightly springy/eased movement, I'd use `duration-300` with a custom cubic-bezier rather than `transition-all`. The sliding-indicator approach is also a common pattern for animated tabs. ([smoothui.dev][2])
+
+[1]: https://uicookies.com/css-tabs/?utm_source=chatgpt.com "8 Free CSS Tabs & Tab Templates – Made by uiCookies"
+[2]: https://smoothui.dev/docs/components/animated-tabs?utm_source=chatgpt.com "Animated Tabs | SmoothUI"
