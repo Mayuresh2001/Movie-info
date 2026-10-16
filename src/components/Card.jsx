@@ -2,15 +2,13 @@ import placeholder from "../poster_placeholder.png";
 
 function Card({ data, updateParam, cardHidden, setCardHidden, setIsLoading, theme }) {
   const isDark = theme === "dark";
-
   async function fetchData() {
     setIsLoading(true);
     setCardHidden(true);
-    await updateParam((prevParam) => {
+    updateParam((prevParam) => {
       const newParam = new URLSearchParams(prevParam);
       newParam.forEach((_, key) => newParam.delete(key));
       newParam.set("i", data.imdbID);
-      setIsLoading(false);
       return newParam.toString();
     });
   }

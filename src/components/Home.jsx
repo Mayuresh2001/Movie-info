@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import Searchbar from "./Searchbar";
 import Cards from "./Cards";
 import axios from "axios";
+import Pagination from "./Pagination";
 
 function Home() {
   const [param, setParam] = useState(new URLSearchParams());
@@ -43,14 +44,13 @@ function Home() {
   return (
     <div className={`Home ${theme} min-h-100vh`}>
       <Navbar theme={theme} toggleTheme={toggleTheme} />
-      <>  <Searchbar
+      <Searchbar
         cardHidden={cardHidden}
         setCardHidden={setCardHidden}
         updateParam={updateParam}
         getData={getData}
         theme={theme}
       />
-      </>
       <Cards
         cardHidden={cardHidden}
         setCardHidden={setCardHidden}
@@ -60,7 +60,12 @@ function Home() {
         isLoading={isLoading}
         setIsLoading={setIsLoading}
         theme={theme}
+        results={data?.totalResults}
       />
+      {/* Pagination */}
+      {data?.totalResults >= 11 && (
+        <Pagination results={data?.totalResults} updateParam={updateParam} theme={theme} />
+      )}
     </div>
   );
 }

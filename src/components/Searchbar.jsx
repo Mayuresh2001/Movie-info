@@ -31,6 +31,7 @@ function Searchbar({ updateParam, setCardHidden, theme }) {
     (query) => {
       updateParam((prev) => {
         const p = new URLSearchParams(prev);
+        p.forEach((_, key) => p.delete(key));
         if (query.trim()) p.set("s", query.trim());
         else p.delete("s");
         return p.toString();
@@ -140,13 +141,13 @@ function Searchbar({ updateParam, setCardHidden, theme }) {
           <button
             key={chip}
             className={`
-    px-[15px] py-[5px]
+    px-3.75 py-[5px]
     rounded-full
     text-[0.78rem]
     font-medium
     font-['Inter']
     cursor-pointer
-    transition-all duration-[var(--transition)]
+    transition-all duration-(--transition)
     border-border
  border-2
 

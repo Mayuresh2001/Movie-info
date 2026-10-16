@@ -6,14 +6,14 @@ const SelectField = ({
   options = [],
 }) => {
   const id = useId();
-  if(typeof options !== "object" || !Array.isArray(options)) {
+  if (typeof options !== "object" || !Array.isArray(options)) {
     console.error("Invalid options provided to SelectField");
     options = [];
   }
 
   return (
-    <div className="relative">
-      <label htmlFor={id}>{label}</label>
+    <div className="relative flex flex-nowrap">
+      <label className="mx-2.5 my-auto text-sm" htmlFor={id}>{label + ":"}</label>
       <select
         id={id}
         className="
@@ -26,11 +26,11 @@ const SelectField = ({
       text-textColor
       transition-all duration-200
       focus:outline-none
-      border-white/10
-                text-[#6d7988]
-                hover:border-redGlow
-                hover:bg-[color-hover-bg]
-                hover:text-[color-hover-text]
+    border-white/10
+    text-[#6d7988]
+    hover:border-redGlow
+      hover:bg-[color-hover-bg]
+      hover:text-[color-hover-text]
     "
         defaultValue=""
       >

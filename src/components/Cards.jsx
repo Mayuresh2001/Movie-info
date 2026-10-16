@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Clapperboard, Tv } from "lucide-react";
 import Card from "./Card";
-import Pagination from "./Pagination";
 import Loader from "../components/Loader";
 import FilterTab from "../utils/FilterTabs";
 import MovieDetailsView from "./MovieDetailsView";
@@ -16,6 +15,7 @@ function Cards({
   cardHidden,
   setCardHidden,
   theme,
+  results
 }) {
   const isDark = theme === "dark";
   const [activeFilter, setActiveFilter] = useState("all");
@@ -24,9 +24,6 @@ function Cards({
   if (data && data.Search && Array.isArray(data.Search)) {
     allMovies = data.Search;
   }
-
-  const results = data?.totalResults;
-
 
   function fetchData(type) {
     setActiveFilter(type);
@@ -41,9 +38,8 @@ function Cards({
       return newParam.toString();
     });
   }
-  
-  if (isLoading) return <Loader theme={theme} />;
 
+  if (isLoading) return <Loader theme={theme} />;
 
   // ── Detail view ──────────────────────────────────────────────────────────────
   if (cardHidden) {
@@ -58,7 +54,7 @@ function Cards({
         <div className=" flex flex-wrap items-center justify-start gap-2 px-8 pt-2 pb-3 mx-auto my-0">
           <div className="flex items-center gap-2">
             {results >= 1 && (
-              <div className="flex flex-wrap gap-2 border-2 rounded-full p-1 border-black/10 bg-white/5 transition-all duration-300" >
+              <div className="flex flex-nowrap gap-2 border-2 rounded-full p-1 border-black/10 bg-white/5 transition-all duration-300" >
                 <FilterTab
                   active={activeFilter === "all"}
                   isDark={isDark}
@@ -128,10 +124,7 @@ function Cards({
         </div>
       )}
 
-      {/* Pagination */}
-      {results >= 11 && (
-        <Pagination results={results} updateParam={updateParam} theme={theme} />
-      )}
+
     </div>
   );
 }
