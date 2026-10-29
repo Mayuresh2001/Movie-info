@@ -5,11 +5,14 @@ const MovieDetailsView = ({ setCardHidden, data, isDark }) => {
   const handleWatchNow = (data) => {
     const { Type, imdbID } = data;
 
-const removePrefix=(str) => str.replace(/^tt/, '');
+const removePrefix = (str) => {
+  return str.startsWith('tt') ? str.slice(2) : str;
+};
     const urlHandler = (type) => {
       // const watchNowUrl = `https://zxcprime.xyz/player/${type}/${imdbID}`;
+      
       let id = removePrefix(imdbID);
-      const watchNowUrl = `https://player.vidzee.wtf/embed/${type}/${id}${type=='tv'&&'/1/1'}`;
+      const watchNowUrl = `https://vixsrc.to${type}/${id}${type === 'tv' ? '/1/1' : ''}`;
       window.open(watchNowUrl, "_blank");
     }
 
