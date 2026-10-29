@@ -12,7 +12,7 @@ const removePrefix = (str) => {
       // const watchNowUrl = `https://zxcprime.xyz/player/${type}/${imdbID}`;
       
       let id = removePrefix(imdbID);
-      const watchNowUrl = `https://vixsrc.to${type}/${id}${type === 'tv' ? '/1/1' : ''}`;
+      const watchNowUrl = `https://vixsrc.to/${type}/${id}${type === 'tv' ? '/1/1' : ''}`;
       window.open(watchNowUrl, "_blank");
     }
 
