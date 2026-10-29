@@ -5,8 +5,11 @@ const MovieDetailsView = ({ setCardHidden, data, isDark }) => {
   const handleWatchNow = (data) => {
     const { Type, imdbID } = data;
 
+const removePrefix=(str) => str.replace(/^tt/, '');
     const urlHandler = (type) => {
-      const watchNowUrl = `https://zxcprime.xyz/player/${type}/${imdbID}`;
+      // const watchNowUrl = `https://zxcprime.xyz/player/${type}/${imdbID}`;
+      let id = type === 'movie' ? imdbID : removePrefix(imdbID);
+      const watchNowUrl = `https://vixsrc.to/${type}/${id}`;
       window.open(watchNowUrl, "_blank");
     }
 
