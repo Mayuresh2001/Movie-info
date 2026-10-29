@@ -8,8 +8,8 @@ const MovieDetailsView = ({ setCardHidden, data, isDark }) => {
 const removePrefix=(str) => str.replace(/^tt/, '');
     const urlHandler = (type) => {
       // const watchNowUrl = `https://zxcprime.xyz/player/${type}/${imdbID}`;
-      let id = type === 'movie' ? imdbID : removePrefix(imdbID);
-      const watchNowUrl = `https://vixsrc.to/${type}/${id}`;
+      let id = removePrefix(imdbID);
+      const watchNowUrl = `https://player.vidzee.wtf/embed/${type}/${id}${type=='tv'&&'/1/1'}`;
       window.open(watchNowUrl, "_blank");
     }
 
